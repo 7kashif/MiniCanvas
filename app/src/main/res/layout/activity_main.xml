@@ -6,9 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-   <View
-       android:id="@+id/canvasSurface"
+   <com.kashif.minicanvas.MyCanvasView
+       android:id="@+id/myCanvasView"
        android:layout_width="match_parent"
        android:layout_height="match_parent"/>
+
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/fabEdit"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_margin="16dp"
+       android:src="@drawable/ic_edit"
+       app:maxImageSize="40dp"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       android:contentDescription="@string/clean_canvas" />
+
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/fabPathColor"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="16dp"
+       android:visibility="gone"
+       app:layout_constraintBottom_toTopOf="@+id/fabEdit"
+       app:layout_constraintEnd_toEndOf="@+id/fabEdit"
+       app:layout_constraintStart_toStartOf="@+id/fabEdit"
+       app:srcCompat="@drawable/ic_path_color" />
+
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/fabBgColor"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="8dp"
+       android:visibility="gone"
+       app:layout_constraintBottom_toTopOf="@+id/fabPathColor"
+       app:layout_constraintEnd_toEndOf="@+id/fabPathColor"
+       app:layout_constraintStart_toStartOf="@+id/fabPathColor"
+       app:srcCompat="@drawable/ic_palette" />
+
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/fabStrokeSize"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="8dp"
+       android:visibility="gone"
+       app:layout_constraintBottom_toTopOf="@+id/fabBgColor"
+       app:layout_constraintEnd_toEndOf="@+id/fabBgColor"
+       app:layout_constraintStart_toStartOf="@+id/fabBgColor"
+       app:srcCompat="@drawable/ic_line_weight" />
+
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/fabClearCanvas"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginBottom="8dp"
+       android:visibility="gone"
+       app:layout_constraintBottom_toTopOf="@+id/fabStrokeSize"
+       app:layout_constraintEnd_toEndOf="@+id/fabStrokeSize"
+       app:layout_constraintStart_toStartOf="@+id/fabStrokeSize"
+       app:srcCompat="@drawable/ic_clear" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

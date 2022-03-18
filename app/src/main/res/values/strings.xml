@@ -2,4 +2,5 @@
     <string name="app_name">MiniCanvas</string>
 
     <string name="canvasContentDescription">MiniCanvas is a simple painting app. Drag your fingers to draw.</string>
+    <string name="clean_canvas">Clean canvas.</string>
 </resources>

@@ -3,16 +3,17 @@ package com.kashif.minicanvas
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.core.content.res.ResourcesCompat
 import kotlin.math.abs
 
-class MyCanvasView(context: Context) : View(context) {
+class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
-    private val STROKE_WIDTH = 12f
+    private var strokeWidth = 12f
     private var motionTouchEventX = 0f
     private var motionTouchEventY = 0f
 
@@ -20,8 +21,8 @@ class MyCanvasView(context: Context) : View(context) {
     private var currentX = 0f
     private var currentY = 0f
 
-    private val backgroundColor = ResourcesCompat.getColor(resources, R.color.colorBackground, null)
-    private val drawColor = ResourcesCompat.getColor(resources, R.color.colorPaint, null)
+    private var bgColor = ResourcesCompat.getColor(resources, R.color.white, null)
+    private var drawColor = ResourcesCompat.getColor(resources, R.color.black, null)
 
     //while drawing we do not have to draw every pixel and make the screen refresh to set that change
     //instead we draw between two points, and by touch tolerance we define how much of touch movement
@@ -30,9 +31,9 @@ class MyCanvasView(context: Context) : View(context) {
     //tolerance amount
     private var touchTolerance = ViewConfiguration.get(context).scaledTouchSlop
 
-    private lateinit var frame: Rect
+//    private lateinit var frame: Rect
 
-    private val paint = Paint().apply {
+    private var paint = Paint().apply {
         color = drawColor
         // Smooths out edges of what is drawn without affecting shape.
         isAntiAlias = true
@@ -43,7 +44,7 @@ class MyCanvasView(context: Context) : View(context) {
             Paint.Join.ROUND // default: MITER, defines how the joint of two lines will look like
         strokeCap = Paint.Cap.ROUND // default: BUTT, defines how the end of a line will look like
         strokeWidth =
-            STROKE_WIDTH // default: Hairline-width (really thin), defines the width of line being drawn
+            strokeWidth // default: Hairline-width (really thin), defines the width of line being drawn
     }
     private var path = Path()
 
@@ -61,16 +62,16 @@ class MyCanvasView(context: Context) : View(context) {
         extraBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         //ARGB_8888 stores each color in 4 bytes and is also recommended
         extraCanvas = Canvas(extraBitmap)
-        extraCanvas.drawColor(backgroundColor)
+        extraCanvas.drawColor(bgColor)
 
-        val inset = 40 //just like padding
-        frame = Rect(inset,inset,w-inset,h-inset)
+//        val inset = 40 //just like padding
+//        frame = Rect(inset,inset,w-inset,h-inset)
     }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas?.drawBitmap(extraBitmap, 0f, 0f, null)
-        canvas?.drawRect(frame,paint)
+//        canvas?.drawRect(frame,paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -86,6 +87,24 @@ class MyCanvasView(context: Context) : View(context) {
             }
         }
         return true
+    }
+
+    fun setDrawingColor(color: Int) {
+        drawColor = ResourcesCompat.getColor(resources, color, null)
+        paint.color = drawColor
+    }
+
+    fun setBgColor(color: Int) {
+        extraCanvas.drawColor(ResourcesCompat.getColor(resources, color, null))
+    }
+
+    fun setStrokeWidth(width: Float) {
+        strokeWidth = width
+    }
+
+    fun clearCanvas() {
+        path.reset()
+        extraCanvas.drawColor(bgColor)
     }
 
     private fun touchStart() {

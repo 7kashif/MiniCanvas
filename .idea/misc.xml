@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/KHAN/Documents/MiniCanvas/app/src/main/res/layout/activity_main.xml" value="0.2015625" />
+        <entry key="..\:/Users/KHAN/Documents/MiniCanvas/app/src/main/res/drawable/ic_edit.xml" value="0.1275" />
+        <entry key="..\:/Users/KHAN/Documents/MiniCanvas/app/src/main/res/drawable/round_bg.xml" value="0.1275" />
+        <entry key="..\:/Users/KHAN/Documents/MiniCanvas/app/src/main/res/drawable/round_green_button.xml" value="0.1275" />
+        <entry key="..\:/Users/KHAN/Documents/MiniCanvas/app/src/main/res/drawable/round_red_button.xml" value="0.1275" />
+        <entry key="..\:/Users/KHAN/Documents/MiniCanvas/app/src/main/res/layout/activity_main.xml" value="0.22" />
       </map>
     </option>
   </component>
