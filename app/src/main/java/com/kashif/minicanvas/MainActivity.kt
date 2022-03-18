@@ -1,7 +1,6 @@
 package com.kashif.minicanvas
 
 import android.os.Bundle
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -42,16 +41,16 @@ class MainActivity : AppCompatActivity() {
                 onEditFabClicked()
             }
             fabPathColor.setOnClickListener {
-                Toast.makeText(this@MainActivity,"Path Color",Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "Path Color", Toast.LENGTH_LONG).show()
             }
             fabBgColor.setOnClickListener {
-                Toast.makeText(this@MainActivity,"Background Color",Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "Background Color", Toast.LENGTH_LONG).show()
             }
             fabStrokeSize.setOnClickListener {
-                Toast.makeText(this@MainActivity,"Stroke size",Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "Stroke size", Toast.LENGTH_LONG).show()
             }
             fabClearCanvas.setOnClickListener {
-                Toast.makeText(this@MainActivity,"Clear Canvas",Toast.LENGTH_LONG).show()
+                Toast.makeText(this@MainActivity, "Clear Canvas", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -64,25 +63,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun setVisibility() {
         binding.apply {
-            if (!clicked) {
-                fabPathColor.isVisible = true
-                fabBgColor.isVisible = true
-                fabStrokeSize.isVisible = true
-                fabClearCanvas.isVisible = true
-                fabPathColor.isEnabled = true
-                fabClearCanvas.isEnabled = true
-                fabBgColor.isEnabled = true
-                fabStrokeSize.isEnabled = true
-            } else {
-                fabPathColor.visibility = View.GONE
-                fabBgColor.visibility = View.GONE
-                fabStrokeSize.visibility = View.GONE
-                fabClearCanvas.visibility = View.GONE
-                fabPathColor.isEnabled = false
-                fabClearCanvas.isEnabled = false
-                fabBgColor.isEnabled = false
-                fabStrokeSize.isEnabled = false
-            }
+            fabPathColor.isVisible = !clicked
+            fabBgColor.isVisible = !clicked
+            fabStrokeSize.isVisible = !clicked
+            fabClearCanvas.isVisible = !clicked
+            fabPathColor.isEnabled = !clicked
+            fabClearCanvas.isEnabled = !clicked
+            fabBgColor.isEnabled = !clicked
+            fabStrokeSize.isEnabled = !clicked
         }
     }
 
