@@ -66,7 +66,6 @@ class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
         //ARGB_8888 stores each color in 4 bytes and is also recommended
         extraCanvas = Canvas(extraBitmap)
         extraCanvas.drawColor(bgColor)
-
 //        val inset = 40 //just like padding
 //        frame = Rect(inset,inset,w-inset,h-inset)
     }
@@ -110,7 +109,6 @@ class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
     fun getStrokeWidth() = myStrokeWidth
 
     fun clearCanvas() {
-        path.reset()
         extraCanvas.drawColor(bgColor)
     }
 
