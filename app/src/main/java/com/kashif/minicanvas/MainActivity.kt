@@ -3,10 +3,10 @@ package com.kashif.minicanvas
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.kashif.minicanvas.databinding.ActivityMainBinding
+import top.defaults.colorpicker.ColorPickerPopup
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -34,23 +34,31 @@ class MainActivity : AppCompatActivity() {
 
     private fun addListeners() {
         binding.apply {
-//            cleanCanvas.setOnClickListener {
-//                myCanvasView.clearCanvas()
-//            }
             fabEdit.setOnClickListener {
                 onEditFabClicked()
             }
             fabPathColor.setOnClickListener {
-                Toast.makeText(this@MainActivity, "Path Color", Toast.LENGTH_LONG).show()
+                colorPickerPopUp().show(it, object : ColorPickerPopup.ColorPickerObserver() {
+                    override fun onColorPicked(color: Int) {
+                        myCanvasView.setDrawingColor(color)
+                    }
+                })
             }
             fabBgColor.setOnClickListener {
-                Toast.makeText(this@MainActivity, "Background Color", Toast.LENGTH_LONG).show()
+                colorPickerPopUp().show(it, object : ColorPickerPopup.ColorPickerObserver() {
+                    override fun onColorPicked(color: Int) {
+                        myCanvasView.setBgColor(color)
+                    }
+                })
             }
             fabStrokeSize.setOnClickListener {
-                Toast.makeText(this@MainActivity, "Stroke size", Toast.LENGTH_LONG).show()
+                CustomDialogs.strokeSizeDialog(layoutInflater,
+                    this@MainActivity,
+                    myCanvasView
+                )
             }
             fabClearCanvas.setOnClickListener {
-                Toast.makeText(this@MainActivity, "Clear Canvas", Toast.LENGTH_LONG).show()
+                myCanvasView.clearCanvas()
             }
         }
     }
@@ -91,5 +99,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun colorPickerPopUp() =
+        ColorPickerPopup.Builder(this@MainActivity)
+            .initialColor(R.color.white)
+            .enableBrightness(false)
+            .enableAlpha(false)
+            .showIndicator(true)
+            .okTitle("Select")
+            .cancelTitle("Cancel")
+            .showValue(true)
+            .build()
 
 }

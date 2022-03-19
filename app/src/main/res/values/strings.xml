@@ -3,4 +3,7 @@
 
     <string name="canvasContentDescription">MiniCanvas is a simple painting app. Drag your fingers to draw.</string>
     <string name="clean_canvas">Clean canvas.</string>
+    <string name="zero">0</string>
+    <string name="stroke_size">Stroke size</string>
+    <string name="select">Select</string>
 </resources>

@@ -2,7 +2,10 @@ package com.kashif.minicanvas
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -13,7 +16,7 @@ import kotlin.math.abs
 class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
     private lateinit var extraCanvas: Canvas
     private lateinit var extraBitmap: Bitmap
-    private var strokeWidth = 12f
+    private var myStrokeWidth = 12f
     private var motionTouchEventX = 0f
     private var motionTouchEventY = 0f
 
@@ -44,7 +47,7 @@ class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
             Paint.Join.ROUND // default: MITER, defines how the joint of two lines will look like
         strokeCap = Paint.Cap.ROUND // default: BUTT, defines how the end of a line will look like
         strokeWidth =
-            strokeWidth // default: Hairline-width (really thin), defines the width of line being drawn
+            myStrokeWidth // default: Hairline-width (really thin), defines the width of line being drawn
     }
     private var path = Path()
 
@@ -90,17 +93,21 @@ class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
     }
 
     fun setDrawingColor(color: Int) {
-        drawColor = ResourcesCompat.getColor(resources, color, null)
+        drawColor = color
         paint.color = drawColor
     }
 
     fun setBgColor(color: Int) {
-        extraCanvas.drawColor(ResourcesCompat.getColor(resources, color, null))
+        bgColor = color
+        extraCanvas.drawColor(bgColor)
     }
 
     fun setStrokeWidth(width: Float) {
-        strokeWidth = width
+        myStrokeWidth = width
+        paint.strokeWidth = myStrokeWidth
     }
+
+    fun getStrokeWidth() = myStrokeWidth
 
     fun clearCanvas() {
         path.reset()
