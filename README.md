@@ -2,6 +2,7 @@
 <h4 align="center">A drawing app with basic controls like, changing drawing and background color, changing stroke size.
 </h4>
 
-<body>
-<iframe src="https://drive.google.com/file/d/1uOHvYDZYsoKXBiSXClFkwfmLp4sTJEIY/preview" width="640" height="480" allow="autoplay"></iframe>
-</body>
+
+https://user-images.githubusercontent.com/59311205/159172161-00cc552c-dcb7-49f0-8312-f732fa1152ef.mp4
+
+
