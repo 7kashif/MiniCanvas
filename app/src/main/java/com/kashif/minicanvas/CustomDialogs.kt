@@ -31,9 +31,12 @@ object CustomDialogs {
             tvStrokeSize.text = myCanvasView.getStrokeWidth().toInt().toString()
             strokeSizeSlider.addOnChangeListener { _, value, _ ->
                 tvStrokeSize.text = value.toInt().toString()
-                myCanvasView.setStrokeWidth(value)
             }
             btnSelect.setOnClickListener {
+                myCanvasView.setStrokeWidth(strokeSizeSlider.value)
+                dialog.dismiss()
+            }
+            btnCancel.setOnClickListener {
                 dialog.dismiss()
             }
         }

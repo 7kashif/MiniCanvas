@@ -98,7 +98,10 @@ class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
 
     fun setBgColor(color: Int) {
         bgColor = color
+        extraCanvas.save()
         extraCanvas.drawColor(bgColor)
+        this.invalidate()
+        extraCanvas.restore()
     }
 
     fun setStrokeWidth(width: Float) {
@@ -139,6 +142,7 @@ class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
 
             //draw the path in extra bitmap to cache it
             extraCanvas.drawPath(path, paint)
+            extraCanvas.save()
         }
         //calling invalidate to eventually call onDraw and redraw the view
         invalidate()

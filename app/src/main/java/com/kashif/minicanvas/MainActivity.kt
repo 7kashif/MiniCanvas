@@ -102,7 +102,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun colorPickerPopUp() =
         ColorPickerPopup.Builder(this@MainActivity)
-            .initialColor(R.color.white)
             .enableBrightness(false)
             .enableAlpha(false)
             .showIndicator(true)

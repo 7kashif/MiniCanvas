@@ -54,6 +54,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/strokeSizeSlider"/>
 
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            android:textSize="18sp"
+            android:textColor="?android:colorPrimary"
+            android:background="@color/transparent"
+            app:layout_constraintEnd_toStartOf="@id/btnSelect"
+            app:layout_constraintTop_toTopOf="@id/btnSelect"
+            app:layout_constraintBottom_toBottomOf="@id/btnSelect"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
