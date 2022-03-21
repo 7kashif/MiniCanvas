@@ -1,16 +1,24 @@
 package com.kashif.minicanvas
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.kashif.minicanvas.databinding.ActivityMainBinding
 import top.defaults.colorpicker.ColorPickerPopup
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val requiredPermissions = arrayOf(
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    )
 
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(this, R.anim.rotate_open_anim)
@@ -71,12 +79,16 @@ class MainActivity : AppCompatActivity() {
                 myCanvasView.clearCanvas()
             }
             fabSaveDrawing.setOnClickListener {
-                val bitmap = myCanvasView.getBitmap()
-                val isSaved = Utils.saveDrawing(bitmap,this@MainActivity)
-                if(isSaved)
-                    Toast.makeText(this@MainActivity,"Drawing Saved.",Toast.LENGTH_LONG).show()
-                else
-                    Toast.makeText(this@MainActivity,"Drawing Saving Failed.",Toast.LENGTH_LONG).show()
+                if(!allPermissionsGranted())
+                    requestPermissions()
+                else{
+                    val bitmap = myCanvasView.getBitmap()
+                    val isSaved = Utils.saveDrawing(bitmap,this@MainActivity)
+                    if(isSaved)
+                        Toast.makeText(this@MainActivity,"Drawing Saved.",Toast.LENGTH_LONG).show()
+                    else
+                        Toast.makeText(this@MainActivity,"Drawing Saving Failed.",Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
@@ -122,6 +134,23 @@ class MainActivity : AppCompatActivity() {
                 fabEdit.startAnimation(rotateClose)
             }
         }
+    }
+
+    private val multiPermissionCallBack = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { map->
+        if(map.isEmpty())
+            Toast.makeText(this,"Allow app to store photos.",Toast.LENGTH_LONG).show()
+    }
+
+    private fun requestPermissions() {
+        multiPermissionCallBack.launch(
+            requiredPermissions
+        )
+    }
+
+    private fun allPermissionsGranted() = requiredPermissions.all {
+        ContextCompat.checkSelfPermission(
+            this, it
+        )== PackageManager.PERMISSION_GRANTED
     }
 
 }
