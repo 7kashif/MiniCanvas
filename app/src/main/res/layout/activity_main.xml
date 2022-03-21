@@ -66,4 +66,15 @@
        app:layout_constraintStart_toStartOf="@+id/fabStrokeSize"
        app:srcCompat="@drawable/ic_clear" />
 
+   <com.google.android.material.floatingactionbutton.FloatingActionButton
+       android:id="@+id/fabSaveDrawing"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginEnd="8dp"
+       android:visibility="gone"
+       app:layout_constraintEnd_toStartOf="@id/fabEdit"
+       app:layout_constraintTop_toTopOf="@id/fabEdit"
+       app:layout_constraintBottom_toBottomOf="@id/fabEdit"
+       android:src="@drawable/ic_save" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

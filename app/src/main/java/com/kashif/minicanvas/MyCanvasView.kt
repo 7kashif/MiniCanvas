@@ -2,10 +2,7 @@ package com.kashif.minicanvas
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -90,6 +87,8 @@ class MyCanvasView(context: Context, attr: AttributeSet) : View(context, attr) {
         }
         return true
     }
+
+    fun getBitmap() = extraBitmap
 
     fun setDrawingColor(color: Int) {
         drawColor = color

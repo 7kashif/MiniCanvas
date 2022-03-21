@@ -3,6 +3,7 @@ package com.kashif.minicanvas
 import android.os.Bundle
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.kashif.minicanvas.databinding.ActivityMainBinding
@@ -23,6 +24,12 @@ class MainActivity : AppCompatActivity() {
     private val toBottom: Animation by lazy {
         AnimationUtils.loadAnimation(this, R.anim.to_bottom)
     }
+    private val fromBottomHorizontal: Animation by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.from_bottom_horizontal)
+    }
+    private val toBottomHorizontal: Animation by lazy {
+        AnimationUtils.loadAnimation(this, R.anim.to_bottom_horizontal)
+    }
     private var clicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,27 +45,38 @@ class MainActivity : AppCompatActivity() {
                 onEditFabClicked()
             }
             fabPathColor.setOnClickListener {
-                colorPickerPopUp().show(it, object : ColorPickerPopup.ColorPickerObserver() {
-                    override fun onColorPicked(color: Int) {
-                        myCanvasView.setDrawingColor(color)
-                    }
-                })
+                Utils.colorPickerPopUp(this@MainActivity)
+                    .show(it, object : ColorPickerPopup.ColorPickerObserver() {
+                        override fun onColorPicked(color: Int) {
+                            myCanvasView.setDrawingColor(color)
+                        }
+                    })
             }
             fabBgColor.setOnClickListener {
-                colorPickerPopUp().show(it, object : ColorPickerPopup.ColorPickerObserver() {
-                    override fun onColorPicked(color: Int) {
-                        myCanvasView.setBgColor(color)
-                    }
-                })
+                Utils.colorPickerPopUp(this@MainActivity)
+                    .show(it, object : ColorPickerPopup.ColorPickerObserver() {
+                        override fun onColorPicked(color: Int) {
+                            myCanvasView.setBgColor(color)
+                        }
+                    })
             }
             fabStrokeSize.setOnClickListener {
-                CustomDialogs.strokeSizeDialog(layoutInflater,
+                Utils.strokeSizeDialog(
+                    layoutInflater,
                     this@MainActivity,
                     myCanvasView
                 )
             }
             fabClearCanvas.setOnClickListener {
                 myCanvasView.clearCanvas()
+            }
+            fabSaveDrawing.setOnClickListener {
+                val bitmap = myCanvasView.getBitmap()
+                val isSaved = Utils.saveDrawing(bitmap,this@MainActivity)
+                if(isSaved)
+                    Toast.makeText(this@MainActivity,"Drawing Saved.",Toast.LENGTH_LONG).show()
+                else
+                    Toast.makeText(this@MainActivity,"Drawing Saving Failed.",Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -71,26 +89,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun setVisibility() {
         binding.apply {
+            //toggling visibility of buttons
             fabPathColor.isVisible = !clicked
             fabBgColor.isVisible = !clicked
             fabStrokeSize.isVisible = !clicked
             fabClearCanvas.isVisible = !clicked
+            fabSaveDrawing.isVisible = !clicked
+            //enabling/disabling buttons
             fabPathColor.isEnabled = !clicked
             fabClearCanvas.isEnabled = !clicked
             fabBgColor.isEnabled = !clicked
             fabStrokeSize.isEnabled = !clicked
+            fabSaveDrawing.isEnabled = !clicked
         }
     }
 
     private fun setAnimation() {
         binding.apply {
             if (!clicked) {
+                fabSaveDrawing.startAnimation(fromBottomHorizontal)
                 fabPathColor.startAnimation(fromBottom)
                 fabBgColor.startAnimation(fromBottom)
                 fabStrokeSize.startAnimation(fromBottom)
                 fabClearCanvas.startAnimation(fromBottom)
                 fabEdit.startAnimation(rotateOpen)
             } else {
+                fabSaveDrawing.startAnimation(toBottomHorizontal)
                 fabPathColor.startAnimation(toBottom)
                 fabBgColor.startAnimation(toBottom)
                 fabStrokeSize.startAnimation(toBottom)
@@ -99,15 +123,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun colorPickerPopUp() =
-        ColorPickerPopup.Builder(this@MainActivity)
-            .enableBrightness(false)
-            .enableAlpha(false)
-            .showIndicator(true)
-            .okTitle("Select")
-            .cancelTitle("Cancel")
-            .showValue(true)
-            .build()
 
 }
